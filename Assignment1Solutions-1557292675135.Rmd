@@ -1,0 +1,104 @@
+---
+title: "Assignment Solutions"
+output: html_notebook
+---
+
+**1. Use various utility functions discussed to create vectors containing these values. You need to create both (one containing 10 values and another containing 26) vectors separately.**
+
+#### Solution:
+
+```{r}
+2^(1:10)
+```
+
+```{r}
+paste0(letters,26:1)
+```
+
+___
+
+**2. Below given is a vector containing first lines of many addresses. Extract city names from all the addresses using string functions. Hint: you can use a for loop to iterate over results of strsplit for further processing.**
+
+```{r}
+address_list = c("802/hiranandani/Mumbai",
+                 "2A/kalka-Delhi",
+                 "345#near adyar#Chennai",
+                 "10-shyaam bazzar-Kolkata")
+```
+
+
+#### Solution:
+
+```{r}
+temp=gsub("-","/",address_list)
+temp=gsub("#","/",temp)
+l=strsplit(temp,"/")
+for(i in 1:4){
+print(l[[i]][3])
+}
+```
+
+___
+
+**3. Use following bit to create a vector with prime numbers in 1:47. (Prime numbers are numbers which are divisible only by themselves)**
+
+```{r}
+primes = c(2,3,5,7,11,13,17,19,23,29,31,37,41,43,47)
+```
+
+**Any number from 48 to 100 which is not divisible by any of the above listed primes is also a prime. Print those prime numbers from 48 to 100.**
+
+#### Solution:
+
+```{r}
+for(i in 48:100){
+temp=i%%primes
+condition=temp==0
+if(sum(condition)==0){print(i)}
+}
+```
+
+___
+
+**4. Find out, how many cars are there are in the dataset mtcars which have automatic transmission, number of forward gears higher than 3 and below average mileage. List their names and calculate average mileage from the data itself. To find out which variable in the data represent mentioned above information do ?mtcars**
+
+#### Solution:
+
+```{r}
+?mtcars
+avg=mean(mtcars$mpg)
+d=mtcars[mtcars$mpg<avg & mtcars$gear>3 & mtcars$am==0,]
+rownames(d)
+
+```
+
+**5. There is no native function in R to calculate mode for a variable. The function "mode" returns storage mode of an object, not the statistical mode that we discussed in the class. Write a function which returns modes of a character vector. Test that on the following vectors.**
+
+```{r}
+set.seed(2)
+x=sample(letters[1:5],50,replace=T)
+y=sample(letters[1:3],50,replace=T)
+```
+
+#### Solution:
+
+```{r}
+mymode=function(x){
+t=table(x)
+result=names(t)[which(t==max(t))]
+return(result)
+}
+mymode(x)
+```
+
+```{r}
+mymode=function(y){
+t=table(y)
+result=names(t)[which(t==max(t))]
+return(result)
+}
+mymode(y)
+```
+
+
+
